@@ -1,0 +1,409 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Don Retos — Juego de fiesta</title>
+  <meta name="description" content="Don Retos: el juego de fiesta para adultos. Retos, química, intensidad y modo responsable. Marca: Iván Barca." />
+
+  <style>
+    :root{
+      --bg0:#050516;
+      --bg1:#020617;
+      --card:rgba(255,255,255,.06);
+      --card2:rgba(255,255,255,.08);
+      --txt:#ffffff;
+      --muted:rgba(255,255,255,.72);
+      --muted2:rgba(255,255,255,.56);
+      --stroke:rgba(255,255,255,.14);
+      --violet:#7C3AED;
+      --purple:#9333EA;
+      --magenta:#E100FF;
+      --pink:#EC4899;
+      --green:#22C55E;
+      --yellow:#FACC15;
+      --shadow: 0 18px 46px rgba(0,0,0,.55);
+      --radius: 22px;
+      --max: 1120px;
+    }
+
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Noto Sans", "Helvetica Neue";
+      color:var(--txt);
+      background:
+        radial-gradient(1200px 600px at 20% 0%, rgba(124,58,237,.35), transparent 55%),
+        radial-gradient(900px 500px at 90% 10%, rgba(225,0,255,.22), transparent 55%),
+        radial-gradient(800px 500px at 50% 100%, rgba(236,72,153,.18), transparent 55%),
+        linear-gradient(180deg, var(--bg0), var(--bg1));
+      overflow-x:hidden;
+    }
+
+    a{color:inherit; text-decoration:none}
+    .wrap{max-width:var(--max); margin:0 auto; padding:0 18px}
+    .nav{
+      position:sticky; top:0; z-index:20;
+      backdrop-filter: blur(14px);
+      background: rgba(5,5,22,.55);
+      border-bottom: 1px solid rgba(255,255,255,.08);
+    }
+    .nav-inner{
+      display:flex; align-items:center; justify-content:space-between;
+      height:64px;
+    }
+    .brand{display:flex; align-items:center; gap:10px; font-weight:900; letter-spacing:.2px}
+    .logo{
+      width:36px; height:36px; border-radius:12px;
+      background: linear-gradient(135deg, var(--violet), var(--pink));
+      box-shadow: 0 10px 24px rgba(124,58,237,.35);
+    }
+    .nav-links{display:flex; gap:14px; color:var(--muted2); font-weight:700; font-size:14px}
+    .nav-links a:hover{color:var(--txt)}
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center;
+      gap:10px;
+      padding:12px 16px;
+      border-radius:16px;
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.06);
+      color:var(--txt);
+      font-weight:900;
+      box-shadow: 0 10px 28px rgba(0,0,0,.35);
+      transition: transform .12s ease, background .12s ease;
+      cursor:pointer;
+      user-select:none;
+    }
+    .btn:hover{transform: translateY(-1px); background: rgba(255,255,255,.09)}
+    .btn.primary{
+      border:none;
+      background: linear-gradient(135deg, var(--violet), var(--purple), var(--magenta));
+      box-shadow: 0 14px 36px rgba(124,58,237,.40);
+    }
+    .btn.primary:hover{transform: translateY(-1px) scale(1.01)}
+    .hero{
+      padding:54px 0 18px;
+    }
+    .grid{
+      display:grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap:18px;
+      align-items:stretch;
+    }
+    @media (max-width: 900px){
+      .grid{grid-template-columns: 1fr}
+      .nav-links{display:none}
+    }
+
+    .card{
+      border: 1px solid rgba(255,255,255,.10);
+      background: linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.04));
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+    .hero-card{padding:22px}
+    .kicker{
+      display:inline-flex; align-items:center; gap:8px;
+      padding:6px 10px;
+      border-radius:999px;
+      background: rgba(255,255,255,.08);
+      border: 1px solid rgba(255,255,255,.12);
+      color: var(--muted);
+      font-size:12px;
+      font-weight:800;
+    }
+    .kicker b{
+      background: linear-gradient(90deg, var(--green), var(--yellow));
+      -webkit-background-clip:text;
+      background-clip:text;
+      color:transparent;
+    }
+    h1{
+      margin:12px 0 10px;
+      font-size:44px;
+      line-height:1.05;
+      letter-spacing:-.7px;
+    }
+    .grad{
+      background: linear-gradient(90deg, #fff, rgba(255,255,255,.9), rgba(177,151,255,.95), rgba(225,0,255,.85));
+      -webkit-background-clip:text;
+      background-clip:text;
+      color:transparent;
+    }
+    .sub{
+      color: var(--muted);
+      font-size:15px;
+      line-height:1.5;
+      margin:0 0 16px;
+      max-width: 56ch;
+    }
+    .cta{display:flex; gap:12px; flex-wrap:wrap; margin-top:10px}
+    .mini{
+      margin-top:14px;
+      display:flex; gap:10px; flex-wrap:wrap;
+      color: var(--muted2);
+      font-weight:700;
+      font-size:13px;
+    }
+    .mini span{
+      padding:8px 10px;
+      border-radius:999px;
+      background: rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.10);
+    }
+
+    .preview{
+      padding:18px;
+      display:flex; flex-direction:column; gap:12px;
+    }
+    .mock{
+      height: 260px;
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,.12);
+      background:
+        radial-gradient(320px 160px at 30% 20%, rgba(124,58,237,.35), transparent 60%),
+        radial-gradient(320px 160px at 80% 30%, rgba(236,72,153,.26), transparent 60%),
+        linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.04));
+      position:relative;
+      overflow:hidden;
+    }
+    .mock::after{
+      content:"";
+      position:absolute; inset:-40px;
+      background: conic-gradient(from 220deg, rgba(124,58,237,.0), rgba(225,0,255,.18), rgba(124,58,237,.0));
+      filter: blur(10px);
+      animation: spin 7s linear infinite;
+    }
+    @keyframes spin{to{transform:rotate(360deg)}}
+    .mock-inner{
+      position:absolute; inset:14px;
+      border-radius: 14px;
+      background: rgba(0,0,0,.28);
+      border: 1px solid rgba(255,255,255,.12);
+      display:flex; flex-direction:column; justify-content:center; align-items:center;
+      text-align:center;
+      padding:14px;
+      z-index:1;
+    }
+    .mock-inner .big{
+      font-weight:950;
+      font-size:20px;
+    }
+    .mock-inner .small{
+      margin-top:6px;
+      color: var(--muted);
+      font-weight:700;
+      font-size:13px;
+      line-height:1.35;
+      max-width: 32ch;
+    }
+
+    section{padding:18px 0}
+    .section-title{
+      font-size:20px; font-weight:950;
+      margin:0 0 10px;
+      letter-spacing:.2px;
+    }
+    .section-sub{color:var(--muted); margin:0 0 14px; line-height:1.55}
+    .cols{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap:12px;
+    }
+    @media (max-width: 900px){ .cols{grid-template-columns:1fr} }
+
+    .tile{
+      padding:14px;
+      border-radius: 18px;
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.10);
+    }
+    .tile h3{margin:8px 0 6px; font-size:15px; font-weight:950}
+    .tile p{margin:0; color:var(--muted); font-size:13px; line-height:1.45}
+    .emoji{font-size:20px}
+
+    .hr{height:1px; background: rgba(255,255,255,.10); margin:18px 0}
+    .footer{
+      padding:22px 0 34px;
+      color: var(--muted2);
+      font-size:13px;
+    }
+    .footer a{color: rgba(177,151,255,.95); font-weight:800}
+    .legal-links{display:flex; gap:12px; flex-wrap:wrap; margin-top:8px}
+  </style>
+</head>
+
+<body>
+  <div class="nav">
+    <div class="wrap nav-inner">
+      <div class="brand">
+        <div class="logo" aria-hidden="true"></div>
+        <div>Don Retos <span style="opacity:.6">—</span> <span style="opacity:.85">Iván Barca</span></div>
+      </div>
+      <div class="nav-links">
+        <a href="#funciona">Cómo funciona</a>
+        <a href="#packs">Packs</a>
+        <a href="#seguridad">Modo responsable</a>
+        <a href="#legal">Legal</a>
+      </div>
+      <a class="btn primary" href="#descargar">Obtener</a>
+    </div>
+  </div>
+
+  <main class="wrap">
+    <div class="hero">
+      <div class="grid">
+        <div class="card hero-card">
+          <div class="kicker">🍾 <b>Fiesta responsable</b> · Juego para adultos</div>
+          <h1><span class="grad">Don Retos</span><br/>la noche sube de nivel.</h1>
+          <p class="sub">
+            Elige packs, añade jugadores y deja que la app maneje la tensión:
+            de “rompehielos” a “todo o nada”. Diseñada con estética morada,
+            haptics y ritmo de fiesta.
+          </p>
+
+          <div class="cta" id="descargar">
+            <!-- Cambia estos links cuando tengas Play/App Store -->
+            <a class="btn primary" href="#" onclick="alert('Aquí irá tu link de Google Play cuando te aprueben la cuenta ✅')">Google Play</a>
+            <a class="btn" href="#" onclick="alert('Aquí irá tu link de App Store (requiere Mac/Xcode y cuenta Apple) ✅')">App Store</a>
+            <a class="btn" href="#funciona">Ver cómo funciona</a>
+          </div>
+
+          <div class="mini">
+            <span>⚡ Intensidad en %</span>
+            <span>🎉 Confetti al empezar</span>
+            <span>🔐 Packs +18 / +21</span>
+          </div>
+        </div>
+
+        <div class="card preview">
+          <div class="mock" aria-hidden="true">
+            <div class="mock-inner">
+              <div class="big">Tu screenshot aquí</div>
+              <div class="small">
+                Recomendación: sube 3–5 capturas y cambia este bloque por imágenes.
+              </div>
+            </div>
+          </div>
+
+          <div class="tile">
+            <div class="emoji">🔥</div>
+            <h3>Intensidad de la noche</h3>
+            <p>
+              La barra sube según los packs elegidos y te deja ver “qué tan caliente” va la partida.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hr"></div>
+
+    <section id="funciona">
+      <h2 class="section-title">Cómo funciona</h2>
+      <p class="section-sub">
+        En 20 segundos ya estás jugando. Sin complicarte, pero con control.
+      </p>
+
+      <div class="cols">
+        <div class="tile">
+          <div class="emoji">🎛️</div>
+          <h3>1) Elige packs</h3>
+          <p>Mezcla niveles (suave / química / extremo) y arma tu noche.</p>
+        </div>
+        <div class="tile">
+          <div class="emoji">⏱️</div>
+          <h3>2) Define duración</h3>
+          <p>10–40 min. La app gestiona turnos y ritmo.</p>
+        </div>
+        <div class="tile">
+          <div class="emoji">👥</div>
+          <h3>3) Agrega jugadores</h3>
+          <p>Con apodos. Se elige al azar quién recibe el reto.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="packs">
+      <h2 class="section-title">Packs (niveles)</h2>
+      <p class="section-sub">
+        Diseñados para escalar la noche. (Puedes editar los textos cuando quieras.)
+      </p>
+
+      <div class="cols">
+        <div class="tile">
+          <div class="emoji">❄️</div>
+          <h3>Nivel 1 — Calentamiento</h3>
+          <p>Rompehielos, coqueteo suave, risas sin presión.</p>
+        </div>
+        <div class="tile">
+          <div class="emoji">😈</div>
+          <h3>Nivel 2 — Química fuerte</h3>
+          <p>Tensión, atrevimiento, “a ver quién se anima”.</p>
+        </div>
+        <div class="tile">
+          <div class="emoji">💣</div>
+          <h3>Nivel 3 — Extremo +18</h3>
+          <p>Solo para valientes. Retos intensos, cero filtro.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="seguridad">
+      <h2 class="section-title">Modo responsable</h2>
+      <p class="section-sub">
+        La regla #1 es el consentimiento. Si alguien no quiere, se salta y punto.
+      </p>
+
+      <div class="cols">
+        <div class="tile">
+          <div class="emoji">🧠</div>
+          <h3>Consentimiento</h3>
+          <p>“No” es “no”. Sin presión social. Sin burlas.</p>
+        </div>
+        <div class="tile">
+          <div class="emoji">🍻</div>
+          <h3>Alcohol</h3>
+          <p>Si hay alcohol, cada uno se cuida y decide. No es obligación.</p>
+        </div>
+        <div class="tile">
+          <div class="emoji">🔞</div>
+          <h3>Contenido adulto</h3>
+          <p>+18 / +21 puede ir bloqueado y activarse con aviso.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="legal">
+      <h2 class="section-title">Legal y contacto</h2>
+      <p class="section-sub">
+        Marca: <b>Iván Barca</b> · Ecuador · Contacto: <b>ivanbarcamafia@gmail.com</b>
+      </p>
+
+      <div class="tile">
+        <div><b>Documentos</b></div>
+        <div class="legal-links">
+          <!-- Cambia estas URLs a tus rutas reales del repo legal -->
+          <a class="btn" href="https://ivanbarcamafia-ctrl.github.io/don-retos-legal/" target="_blank" rel="noreferrer">Centro legal</a>
+          <a class="btn" href="https://ivanbarcamafia-ctrl.github.io/don-retos-legal/terms.html" target="_blank" rel="noreferrer">Términos</a>
+          <a class="btn" href="https://ivanbarcamafia-ctrl.github.io/don-retos-legal/privacy.html" target="_blank" rel="noreferrer">Privacidad</a>
+          <a class="btn" href="mailto:ivanbarcamafia@gmail.com">Escribir email</a>
+        </div>
+        <p style="margin:12px 0 0; color:var(--muted); font-size:13px; line-height:1.5">
+          Nota: si aún no tienes <code>terms.html</code> y <code>privacy.html</code>, créalos en tu repo legal
+          (o ajusta estos links a los nombres reales).
+        </p>
+      </div>
+    </section>
+
+    <div class="footer">
+      © <span id="y"></span> Don Retos · Iván Barca — Todos los derechos reservados.
+    </div>
+  </main>
+
+  <script>
+    document.getElementById("y").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
