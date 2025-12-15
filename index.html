@@ -10,24 +10,19 @@
     :root{
       --bg0:#050516;
       --bg1:#020617;
-      --txt:#fff;
-      --muted:rgba(255,255,255,.75);
-      --muted2:rgba(255,255,255,.55);
-      --stroke:rgba(255,255,255,.12);
-
+      --txt:#ffffff;
+      --muted:rgba(255,255,255,.72);
+      --muted2:rgba(255,255,255,.56);
+      --stroke:rgba(255,255,255,.14);
       --violet:#7C3AED;
       --purple:#9333EA;
       --magenta:#E100FF;
       --pink:#EC4899;
-
       --green:#22C55E;
       --yellow:#FACC15;
-
-      --radius:24px;
-      --shadow: 0 18px 60px rgba(0,0,0,.55);
+      --shadow: 0 18px 46px rgba(0,0,0,.55);
+      --radius: 22px;
       --max: 1120px;
-
-      --ease: cubic-bezier(.2,.9,.2,1);
     }
 
     *{box-sizing:border-box}
@@ -36,18 +31,26 @@
       margin:0;
       font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Noto Sans", "Helvetica Neue";
       color:var(--txt);
-      background:
-        radial-gradient(1200px 600px at 15% 0%, rgba(124,58,237,.38), transparent 58%),
-        radial-gradient(900px 520px at 95% 10%, rgba(225,0,255,.22), transparent 55%),
-        radial-gradient(900px 520px at 60% 105%, rgba(236,72,153,.16), transparent 55%),
-        linear-gradient(180deg, var(--bg0), var(--bg1));
+      background: linear-gradient(180deg, var(--bg0), var(--bg1));
       overflow-x:hidden;
+    }
+
+    /* Fondo reactivo (se ajusta por JS con --night y --glow) */
+    body::before{
+      content:"";
+      position:fixed; inset:0;
+      pointer-events:none;
+      background:
+        radial-gradient(1200px 600px at 20% 0%, rgba(124,58,237, var(--glow, .30)), transparent 55%),
+        radial-gradient(900px 500px at 90% 10%, rgba(225,0,255, var(--glow2, .18)), transparent 55%),
+        radial-gradient(900px 600px at 50% 100%, rgba(236,72,153, var(--glow3, .14)), transparent 55%),
+        linear-gradient(180deg, rgba(0,0,0, var(--night, .10)), rgba(0,0,0, var(--night2, .25)));
+      transition: .25s ease;
+      z-index:-2;
     }
 
     a{color:inherit; text-decoration:none}
     .wrap{max-width:var(--max); margin:0 auto; padding:0 18px}
-
-    /* NAV */
     .nav{
       position:sticky; top:0; z-index:30;
       backdrop-filter: blur(14px);
@@ -56,32 +59,29 @@
     }
     .nav-inner{
       display:flex; align-items:center; justify-content:space-between;
-      height:66px;
+      height:64px;
       gap:12px;
     }
-    .brand{
-      display:flex; align-items:center; gap:10px; font-weight:950; letter-spacing:.2px
-    }
+    .brand{display:flex; align-items:center; gap:10px; font-weight:950; letter-spacing:.2px}
     .logo{
-      width:38px; height:38px; border-radius:14px;
+      width:36px; height:36px; border-radius:12px;
       background: linear-gradient(135deg, var(--violet), var(--pink));
-      box-shadow: 0 14px 34px rgba(124,58,237,.42);
+      box-shadow: 0 10px 24px rgba(124,58,237,.35);
       position:relative;
       overflow:hidden;
     }
     .logo::after{
       content:"";
-      position:absolute; inset:-30px;
-      background: conic-gradient(from 210deg, rgba(255,255,255,0), rgba(255,255,255,.22), rgba(255,255,255,0));
-      animation: spin 6.5s linear infinite;
-      filter: blur(8px);
-      opacity:.55;
+      position:absolute; inset:-40px;
+      background: conic-gradient(from 220deg, rgba(124,58,237,0), rgba(225,0,255,.22), rgba(124,58,237,0));
+      filter: blur(10px);
+      animation: spin 7s linear infinite;
     }
+    @keyframes spin{to{transform:rotate(360deg)}}
+
     .nav-links{display:flex; gap:14px; color:var(--muted2); font-weight:800; font-size:14px}
     .nav-links a{padding:8px 10px; border-radius:999px}
     .nav-links a:hover{color:var(--txt); background: rgba(255,255,255,.06)}
-
-    /* BUTTONS */
     .btn{
       display:inline-flex; align-items:center; justify-content:center;
       gap:10px;
@@ -92,39 +92,46 @@
       color:var(--txt);
       font-weight:950;
       box-shadow: 0 10px 28px rgba(0,0,0,.35);
-      transition: transform .14s var(--ease), background .14s var(--ease), box-shadow .14s var(--ease);
+      transition: transform .12s ease, background .12s ease, filter .12s ease;
       cursor:pointer;
       user-select:none;
-      position:relative;
-      overflow:hidden;
     }
     .btn:hover{transform: translateY(-1px); background: rgba(255,255,255,.09)}
-    .btn:active{transform: translateY(1px) scale(.99)}
+    .btn:active{transform: translateY(0px) scale(.99)}
     .btn.primary{
       border:none;
       background: linear-gradient(135deg, var(--violet), var(--purple), var(--magenta));
-      box-shadow: 0 16px 46px rgba(124,58,237,.48);
+      box-shadow: 0 14px 36px rgba(124,58,237,.40);
     }
-    .btn.primary::after{
-      content:"";
-      position:absolute; inset:-40px;
-      background: radial-gradient(circle at 30% 30%, rgba(255,255,255,.35), transparent 55%);
-      transform: translateX(-30%) translateY(-30%);
-      opacity:.25;
-      transition: opacity .2s var(--ease);
+    .btn.primary:hover{filter:saturate(1.08)}
+    .btn.small{padding:10px 12px; border-radius:14px; font-size:13px}
+    .pill{
+      display:inline-flex; align-items:center; gap:8px;
+      padding:6px 10px;
+      border-radius:999px;
+      background: rgba(255,255,255,.08);
+      border: 1px solid rgba(255,255,255,.12);
+      color: var(--muted);
+      font-size:12px;
+      font-weight:900;
     }
-    .btn.primary:hover::after{opacity:.38}
+    .pill b{
+      background: linear-gradient(90deg, var(--green), var(--yellow));
+      -webkit-background-clip:text;
+      background-clip:text;
+      color:transparent;
+    }
 
-    /* HERO */
-    .hero{padding:54px 0 18px; position:relative}
+    main{position:relative}
+    .hero{padding:54px 0 18px}
     .grid{
       display:grid;
-      grid-template-columns: 1.12fr .88fr;
-      gap:16px;
+      grid-template-columns: 1.2fr .8fr;
+      gap:18px;
       align-items:stretch;
     }
-    @media (max-width: 920px){
-      .grid{grid-template-columns:1fr}
+    @media (max-width: 900px){
+      .grid{grid-template-columns: 1fr}
       .nav-links{display:none}
     }
 
@@ -136,30 +143,23 @@
       overflow:hidden;
       position:relative;
     }
-
+    .card::after{
+      content:"";
+      position:absolute; inset:-120px;
+      background: radial-gradient(circle at 40% 30%, rgba(124,58,237,.22), transparent 60%),
+                  radial-gradient(circle at 80% 20%, rgba(236,72,153,.18), transparent 60%);
+      filter: blur(18px);
+      pointer-events:none;
+      opacity:.55;
+    }
     .hero-card{padding:22px}
-    .kicker{
-      display:inline-flex; align-items:center; gap:8px;
-      padding:7px 11px;
-      border-radius:999px;
-      background: rgba(255,255,255,.08);
-      border: 1px solid rgba(255,255,255,.12);
-      color: var(--muted);
-      font-size:12px;
-      font-weight:900;
-    }
-    .kicker b{
-      background: linear-gradient(90deg, var(--green), var(--yellow));
-      -webkit-background-clip:text;
-      background-clip:text;
-      color:transparent;
-    }
-
     h1{
       margin:12px 0 10px;
-      font-size:46px;
-      line-height:1.02;
-      letter-spacing:-.9px;
+      font-size:44px;
+      line-height:1.05;
+      letter-spacing:-.7px;
+      position:relative;
+      z-index:1;
     }
     .grad{
       background: linear-gradient(90deg, #fff, rgba(255,255,255,.9), rgba(177,151,255,.95), rgba(225,0,255,.85));
@@ -170,38 +170,32 @@
     .sub{
       color: var(--muted);
       font-size:15px;
-      line-height:1.55;
+      line-height:1.5;
       margin:0 0 16px;
       max-width: 58ch;
+      position:relative;
+      z-index:1;
     }
-
-    /* “viral meter” */
-    .live{
-      margin-top:10px;
+    .cta{display:flex; gap:12px; flex-wrap:wrap; margin-top:10px; position:relative; z-index:1}
+    .mini{
+      margin-top:14px;
       display:flex; gap:10px; flex-wrap:wrap;
       color: var(--muted2);
-      font-weight:900;
+      font-weight:800;
       font-size:13px;
+      position:relative;
+      z-index:1;
     }
-    .pill{
-      padding:9px 10px;
+    .mini span{
+      padding:8px 10px;
       border-radius:999px;
       background: rgba(255,255,255,.06);
       border:1px solid rgba(255,255,255,.10);
-      display:inline-flex; align-items:center; gap:8px;
-    }
-    .dot{
-      width:8px; height:8px; border-radius:99px;
-      background: linear-gradient(135deg, var(--green), var(--yellow));
-      box-shadow: 0 0 16px rgba(250,204,21,.35);
     }
 
-    .cta{display:flex; gap:12px; flex-wrap:wrap; margin-top:12px}
-
-    /* RIGHT SIDE */
     .preview{padding:18px; display:flex; flex-direction:column; gap:12px}
     .mock{
-      height: 270px;
+      height: 260px;
       border-radius: 18px;
       border: 1px solid rgba(255,255,255,.12);
       background:
@@ -210,14 +204,14 @@
         linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.04));
       position:relative;
       overflow:hidden;
+      z-index:1;
     }
     .mock::after{
       content:"";
-      position:absolute; inset:-50px;
-      background: conic-gradient(from 220deg, rgba(124,58,237,0), rgba(225,0,255,.22), rgba(124,58,237,0));
+      position:absolute; inset:-40px;
+      background: conic-gradient(from 220deg, rgba(124,58,237,.0), rgba(225,0,255,.18), rgba(124,58,237,.0));
       filter: blur(10px);
       animation: spin 7s linear infinite;
-      opacity:.85;
     }
     .mock-inner{
       position:absolute; inset:14px;
@@ -227,7 +221,7 @@
       display:flex; flex-direction:column; justify-content:center; align-items:center;
       text-align:center;
       padding:14px;
-      z-index:1;
+      z-index:2;
     }
     .mock-inner .big{font-weight:950; font-size:20px}
     .mock-inner .small{
@@ -239,14 +233,14 @@
       max-width: 36ch;
     }
 
-    /* Section */
     section{padding:18px 0}
-    .hr{height:1px; background: rgba(255,255,255,.10); margin:18px 0}
-
     .section-title{font-size:20px; font-weight:950; margin:0 0 10px; letter-spacing:.2px}
     .section-sub{color:var(--muted); margin:0 0 14px; line-height:1.55}
-
-    .cols{display:grid; grid-template-columns: repeat(3, 1fr); gap:12px}
+    .cols{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap:12px;
+    }
     @media (max-width: 900px){ .cols{grid-template-columns:1fr} }
 
     .tile{
@@ -254,102 +248,116 @@
       border-radius: 18px;
       background: rgba(255,255,255,.06);
       border: 1px solid rgba(255,255,255,.10);
-      transition: transform .16s var(--ease), background .16s var(--ease), border-color .16s var(--ease);
       position:relative;
       overflow:hidden;
     }
-    .tile:hover{
-      transform: translateY(-2px);
-      background: rgba(255,255,255,.08);
-      border-color: rgba(177,151,255,.32);
-    }
+    .tile:hover{border-color: rgba(255,255,255,.18)}
     .tile h3{margin:8px 0 6px; font-size:15px; font-weight:950}
     .tile p{margin:0; color:var(--muted); font-size:13px; line-height:1.45}
     .emoji{font-size:20px}
 
-    /* clickable packs */
-    .pack{
-      cursor:pointer;
-      user-select:none;
-    }
-    .pack::after{
-      content:"";
-      position:absolute; inset:-60px;
-      background: radial-gradient(circle at 30% 30%, rgba(255,255,255,.22), transparent 55%);
-      opacity:0;
-      transition: opacity .2s var(--ease);
-    }
-    .pack:hover::after{opacity:.25}
-    .pack.selected{
-      border-color: rgba(225,0,255,.55);
-      box-shadow: 0 18px 60px rgba(225,0,255,.18);
-    }
-    .pack.selected .tag{
-      opacity:1;
-      transform: translateY(0);
-    }
-    .tag{
-      position:absolute; top:12px; right:12px;
-      padding:6px 10px;
-      border-radius:999px;
-      border:1px solid rgba(255,255,255,.16);
-      background: rgba(0,0,0,.35);
-      font-size:12px;
-      font-weight:950;
-      color: rgba(255,255,255,.92);
-      opacity:0;
-      transform: translateY(-6px);
-      transition: .18s var(--ease);
-    }
+    .hr{height:1px; background: rgba(255,255,255,.10); margin:18px 0}
 
-    /* intensity bar */
-    .bar-wrap{
-      margin-top:12px;
+    /* Intensidad UI */
+    .intensity{
+      display:flex; flex-direction:column; gap:8px;
+      margin-top:14px;
       padding:12px;
       border-radius: 18px;
-      background: rgba(255,255,255,.06);
-      border: 1px solid rgba(255,255,255,.10);
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.05);
+      position:relative;
+      z-index:1;
     }
-    .bar-top{
+    .intensity-head{
       display:flex; align-items:center; justify-content:space-between;
-      gap:10px; margin-bottom:8px;
       font-weight:950;
       color: rgba(255,255,255,.86);
+      font-size:13px;
     }
-    .bar-top small{color: var(--muted2); font-weight:900}
     .bar{
       height: 12px;
       border-radius: 999px;
       background: rgba(255,255,255,.10);
       overflow:hidden;
-      position:relative;
+      border:1px solid rgba(255,255,255,.10);
     }
-    .bar > i{
-      display:block;
+    .bar > div{
       height:100%;
       width:0%;
-      border-radius: 999px;
+      border-radius:999px;
       background: linear-gradient(90deg, var(--violet), var(--purple), var(--magenta), var(--pink));
-      transition: width .28s var(--ease);
-      position:relative;
+      transition: width .28s ease;
+      box-shadow: 0 12px 30px rgba(124,58,237,.35);
     }
-    .bar > i::after{
-      content:"";
-      position:absolute; inset:-20px;
-      background: radial-gradient(circle at 20% 50%, rgba(255,255,255,.35), transparent 55%);
-      opacity:.35;
-      transform: translateX(-20%);
-      animation: sheen 1.8s linear infinite;
+    .hint{color:var(--muted2); font-weight:800; font-size:12px; line-height:1.35}
+
+    /* Card game */
+    .tap-card{
+      margin-top:12px;
+      padding:24px;
+      border-radius:18px;
+      background: linear-gradient(135deg,#7C3AED,#EC4899);
+      font-weight:950;
+      text-align:center;
+      cursor:pointer;
+      transition:.18s ease;
+      border:1px solid rgba(255,255,255,.18);
+      user-select:none;
     }
-    @keyframes sheen{
-      to{transform: translateX(120%)}
+    .tap-card:hover{transform: translateY(-1px)}
+    .tap-card:active{transform: translateY(0px) scale(.99)}
+    .shake{animation: shake .35s ease}
+    @keyframes shake{
+      0%,100%{transform:translateX(0)}
+      25%{transform:translateX(-6px)}
+      50%{transform:translateX(6px)}
+      75%{transform:translateX(-4px)}
     }
 
-    /* confetti canvas overlay */
-    #fx{
+    /* Locked */
+    .locked-box{
+      margin-top:14px;
+      padding:14px;
+      border-radius:18px;
+      background: rgba(255,255,255,.05);
+      border: 1px solid rgba(255,255,255,.12);
+      text-align:center;
+    }
+    .censored{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      letter-spacing: .8px;
+      opacity:.9;
+    }
+
+    /* Toast */
+    .toast{
+      position:fixed;
+      left:50%;
+      bottom:22px;
+      transform:translateX(-50%);
+      padding:12px 14px;
+      border-radius: 16px;
+      background: rgba(0,0,0,.55);
+      border:1px solid rgba(255,255,255,.14);
+      backdrop-filter: blur(12px);
+      box-shadow: 0 16px 40px rgba(0,0,0,.55);
+      color: rgba(255,255,255,.90);
+      font-weight:900;
+      font-size:13px;
+      opacity:0;
       pointer-events:none;
-      position:fixed; inset:0;
-      z-index:100;
+      transition: .22s ease;
+      z-index:999;
+    }
+    .toast.show{opacity:1; transform:translateX(-50%) translateY(-6px)}
+
+    /* confetti canvas overlay */
+    #confetti{
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      z-index:80;
     }
 
     .footer{
@@ -358,121 +366,137 @@
       font-size:13px;
     }
     .footer a{color: rgba(177,151,255,.95); font-weight:900}
-    .legal-links{display:flex; gap:12px; flex-wrap:wrap; margin-top:10px}
-
-    /* background particles */
-    .bgfx{
-      position:absolute; inset:0;
-      pointer-events:none;
-      opacity:.65;
-      mask-image: radial-gradient(circle at 50% 10%, black 40%, transparent 72%);
-    }
-    @keyframes spin{to{transform:rotate(360deg)}}
+    .legal-links{display:flex; gap:10px; flex-wrap:wrap; margin-top:10px}
   </style>
 </head>
 
 <body>
-  <canvas id="fx"></canvas>
+  <canvas id="confetti"></canvas>
 
   <div class="nav">
     <div class="wrap nav-inner">
-      <div class="brand">
+      <div class="brand" id="brandTap" title="Tip: toca 5 veces 👀">
         <div class="logo" aria-hidden="true"></div>
-        <div>Don Retos <span style="opacity:.6">—</span> <span style="opacity:.85">Iván Barca</span></div>
+        <div>Don Retos <span style="opacity:.6">—</span> <span style="opacity:.88">Iván Barca</span></div>
       </div>
+
       <div class="nav-links">
         <a href="#funciona">Cómo funciona</a>
         <a href="#packs">Packs</a>
         <a href="#seguridad">Modo responsable</a>
         <a href="#legal">Legal</a>
       </div>
-      <a class="btn primary" href="#descargar">Obtener</a>
+
+      <a class="btn primary" href="#descargar" onclick="beep(); pop(10)">Obtener</a>
     </div>
   </div>
 
   <main class="wrap">
     <div class="hero">
-      <!-- subtle moving bg particles -->
-      <svg class="bgfx" viewBox="0 0 100 40" preserveAspectRatio="none" aria-hidden="true">
-        <defs>
-          <linearGradient id="g" x1="0" x2="1">
-            <stop offset="0" stop-color="#7C3AED" stop-opacity=".35"/>
-            <stop offset=".6" stop-color="#E100FF" stop-opacity=".22"/>
-            <stop offset="1" stop-color="#EC4899" stop-opacity=".18"/>
-          </linearGradient>
-        </defs>
-        <circle cx="18" cy="10" r="5" fill="url(#g)"/>
-        <circle cx="36" cy="18" r="7" fill="url(#g)"/>
-        <circle cx="62" cy="12" r="6" fill="url(#g)"/>
-        <circle cx="84" cy="22" r="8" fill="url(#g)"/>
-      </svg>
-
       <div class="grid">
         <div class="card hero-card">
-          <div class="kicker">🍾 <b>Fiesta responsable</b> · Juego para adultos</div>
+          <div class="pill">🍾 <b>Fiesta responsable</b> · Juego para adultos</div>
 
           <h1><span class="grad">Don Retos</span><br/>la noche sube de nivel.</h1>
 
           <p class="sub">
             Elige packs, añade jugadores y deja que la app maneje la tensión:
-            de “rompehielos” a “todo o nada”.
-            <b style="color:rgba(255,255,255,.9)">Cada click sube la intensidad.</b>
+            de “rompehielos” a “todo o nada”. Esta página NO es un folleto: puedes
+            jugar una mini-demo ahora mismo.
           </p>
 
-          <!-- live addictive little meter -->
-          <div class="live">
-            <span class="pill"><span class="dot"></span> Partidas hoy: <span id="plays">0</span></span>
-            <span class="pill">🔥 Racha: <span id="streak">0</span> min</span>
-            <span class="pill">⚡ Intensidad: <span id="pct">0</span>%</span>
+          <div class="cta" id="descargar">
+            <a class="btn primary" href="#" onclick="toast('Aquí irá tu link de Google Play cuando te aprueben ✅'); beep(); pop(12); return false;">Google Play</a>
+            <a class="btn" href="#" onclick="toast('App Store requiere Mac/Xcode y cuenta Apple ✅'); beep(); return false;">App Store</a>
+            <a class="btn" href="#demo" onclick="beep();">Jugar demo</a>
           </div>
 
-          <div class="bar-wrap" aria-label="Intensidad de la noche">
-            <div class="bar-top">
+          <div class="mini">
+            <span>⚡ Intensidad real</span>
+            <span>🎉 Confetti</span>
+            <span>🔐 +21 bloqueado</span>
+          </div>
+
+          <!-- Intensidad -->
+          <div class="intensity">
+            <div class="intensity-head">
               <div>Intensidad de la noche</div>
-              <small id="label">Suave</small>
+              <div><span id="pct">0</span>%</div>
             </div>
-            <div class="bar"><i id="fill"></i></div>
-            <div style="margin-top:10px; display:flex; gap:10px; flex-wrap:wrap">
-              <button class="btn" type="button" id="reset">Reset</button>
-              <button class="btn primary" type="button" id="boost">🔥 Modo Caos</button>
+            <div class="bar"><div id="barFill"></div></div>
+            <div class="hint" id="hint">Tip: juega la demo y sube el % para desbloquear el modo +21.</div>
+
+            <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:6px">
+              <button class="btn small" onclick="setIntensity(intensity+15); beep(); pop(10)">+15%</button>
+              <button class="btn small" onclick="setIntensity(intensity-10); beep(520,0.05)">-10%</button>
+              <button class="btn small" onclick="resetIntensity(); beep(300,0.06)">Reset</button>
             </div>
-          </div>
-
-          <div class="cta" id="descargar" style="margin-top:14px">
-            <a class="btn primary" href="#" id="playBtn">Probar demo (click)</a>
-            <a class="btn" href="#" onclick="alert('Aquí irá tu link de Google Play cuando te aprueben la cuenta ✅')">Google Play</a>
-            <a class="btn" href="#" onclick="alert('Aquí irá tu link de App Store (requiere Mac/Xcode y cuenta Apple) ✅')">App Store</a>
-          </div>
-
-          <div class="live" style="margin-top:12px">
-            <span class="pill">🎉 Confetti al 100%</span>
-            <span class="pill">🔐 Packs +18 / +21 bloqueables</span>
-            <span class="pill">📩 Soporte: ivanbarcamafia@gmail.com</span>
           </div>
         </div>
 
         <div class="card preview">
           <div class="mock" aria-hidden="true">
             <div class="mock-inner">
-              <div class="big">Pon screenshots reales</div>
-              <div class="small">
-                Tip: usa 1080×1920 y 1242×2688. Cambiamos este bloque por imágenes cuando quieras.
-              </div>
+              <div class="big">Tu screenshot aquí</div>
+              <div class="small">Sube 3–5 capturas reales en tu repo y reemplaza este bloque por imágenes.</div>
             </div>
           </div>
 
           <div class="tile">
-            <div class="emoji">🕹️</div>
-            <h3>La app te “pica” a seguir</h3>
-            <p>
-              Micro-feedback, ritmo y escalada. Sientes el progreso al instante.
-            </p>
+            <div class="emoji">🔥</div>
+            <h3>Intensidad que reacciona</h3>
+            <p>El fondo se “oscurece” y brilla más según tu porcentaje. Sí: se siente vivo.</p>
           </div>
         </div>
       </div>
     </div>
 
     <div class="hr"></div>
+
+    <!-- DEMO -->
+    <section id="demo">
+      <h2 class="section-title">Demo jugable (mini)</h2>
+      <p class="section-sub">Toca, genera retos, sube intensidad y desbloquea lo prohibido 😈</p>
+
+      <div class="cols">
+        <div class="tile">
+          <div class="emoji">🎲</div>
+          <h3>Reto rápido</h3>
+          <p id="quickChallenge">Toca “Dame uno” para empezar.</p>
+          <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:10px">
+            <button class="btn primary" onclick="newChallenge()">Dame uno</button>
+            <button class="btn" onclick="passChallenge()">Paso 😅</button>
+          </div>
+        </div>
+
+        <div class="tile">
+          <div class="emoji">🃏</div>
+          <h3>Carta misteriosa</h3>
+          <p>Tap para revelar. Cada tap sube la noche.</p>
+          <div id="card" class="tap-card" onclick="flipCard()">TOCA PARA REVELAR</div>
+          <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:10px">
+            <button class="btn small" onclick="superFlip()">Modo Caos ⚡</button>
+            <button class="btn small" onclick="beep(); boom(80)">Confetti</button>
+          </div>
+        </div>
+
+        <div class="tile">
+          <div class="emoji">🔞</div>
+          <h3>Zona bloqueada (+21)</h3>
+          <p class="censored" id="lockedText">██████████████████████████</p>
+
+          <div class="locked-box">
+            <div style="font-weight:950; margin-bottom:10px">Desbloqueo</div>
+            <button class="btn primary" onclick="unlock()">Desbloquear</button>
+            <button class="btn" onclick="toggle21(true)">Activar +21 (si está permitido)</button>
+          </div>
+
+          <p class="hint" style="margin-top:10px">
+            Regla: si tu intensidad está baja, no te deja. Si subes el %… aparece.
+          </p>
+        </div>
+      </div>
+    </section>
 
     <section id="funciona">
       <h2 class="section-title">Cómo funciona</h2>
@@ -486,38 +510,33 @@
         </div>
         <div class="tile">
           <div class="emoji">⏱️</div>
-          <h3>2) Duración</h3>
-          <p>10–40 min. Ritmo rápido, como reels: directo al punto.</p>
+          <h3>2) Define duración</h3>
+          <p>10–40 min. La app gestiona turnos y ritmo.</p>
         </div>
         <div class="tile">
           <div class="emoji">👥</div>
-          <h3>3) Jugadores</h3>
-          <p>Con apodos. La app elige al azar quién enfrenta el reto.</p>
+          <h3>3) Agrega jugadores</h3>
+          <p>Con apodos. Se elige al azar quién recibe el reto.</p>
         </div>
       </div>
     </section>
 
     <section id="packs">
-      <h2 class="section-title">Packs (clic para subir intensidad)</h2>
-      <p class="section-sub">Tócalos: se “seleccionan” y sube la barra. Cuando llegas al 100%… boom.</p>
+      <h2 class="section-title">Packs (niveles)</h2>
+      <p class="section-sub">Diseñados para escalar. En tu app real puedes ajustar los textos como quieras.</p>
 
       <div class="cols">
-        <div class="tile pack" data-add="20" data-name="Nivel 1 — Calentamiento">
-          <div class="tag">+20%</div>
+        <div class="tile">
           <div class="emoji">❄️</div>
           <h3>Nivel 1 — Calentamiento</h3>
-          <p>Rompehielos, risas, coqueteo suave.</p>
+          <p>Rompehielos, coqueteo suave, risas sin presión.</p>
         </div>
-
-        <div class="tile pack" data-add="30" data-name="Nivel 2 — Química fuerte">
-          <div class="tag">+30%</div>
+        <div class="tile">
           <div class="emoji">😈</div>
           <h3>Nivel 2 — Química fuerte</h3>
           <p>Tensión, atrevimiento, “a ver quién se anima”.</p>
         </div>
-
-        <div class="tile pack" data-add="50" data-name="Nivel 3 — Extremo +18">
-          <div class="tag">+50%</div>
+        <div class="tile">
           <div class="emoji">💣</div>
           <h3>Nivel 3 — Extremo +18</h3>
           <p>Solo para valientes. Retos intensos, cero filtro.</p>
@@ -527,23 +546,23 @@
 
     <section id="seguridad">
       <h2 class="section-title">Modo responsable</h2>
-      <p class="section-sub">Regla #1: consentimiento. Si alguien no quiere, se salta y punto.</p>
+      <p class="section-sub">La regla #1 es el consentimiento. Si alguien no quiere, se salta y punto.</p>
 
       <div class="cols">
         <div class="tile">
           <div class="emoji">🧠</div>
           <h3>Consentimiento</h3>
-          <p>“No” es “no”. Cero presión. Cero vergüenza.</p>
+          <p>“No” es “no”. Sin presión social. Sin burlas.</p>
         </div>
         <div class="tile">
           <div class="emoji">🍻</div>
           <h3>Alcohol</h3>
-          <p>Si hay alcohol, cada uno decide. Don Retos no obliga.</p>
+          <p>Si hay alcohol, cada uno decide y se cuida. No es obligación.</p>
         </div>
         <div class="tile">
           <div class="emoji">🔞</div>
           <h3>Contenido adulto</h3>
-          <p>+18 / +21 puede ir bloqueado y activarse con aviso.</p>
+          <p>+18 / +21 puede ir bloqueado con aviso y reglas claras.</p>
         </div>
       </div>
     </section>
@@ -555,166 +574,284 @@
       </p>
 
       <div class="tile">
-        <div><b>Documentos</b></div>
+        <div style="font-weight:950">Documentos</div>
         <div class="legal-links">
-          <a class="btn" href="https://ivanbarcamafia-ctrl.github.io/don-retos-legal/" target="_blank" rel="noreferrer">Centro legal</a>
-          <a class="btn" href="mailto:ivanbarcamafia@gmail.com">Escribir email</a>
+          <a class="btn" href="https://ivanbarcamafia-ctrl.github.io/don-retos-legal/" target="_blank" rel="noreferrer" onclick="beep(); pop(10)">Centro legal</a>
+          <a class="btn" href="mailto:ivanbarcamafia@gmail.com" onclick="beep()">Escribir email</a>
         </div>
         <p style="margin:12px 0 0; color:var(--muted); font-size:13px; line-height:1.5">
-          Sube <code>terms.html</code> y <code>privacy.html</code> en tu repo legal y los linkeamos aquí.
+          Consejo: en tu repo legal crea <code>terms.html</code> y <code>privacy.html</code> y enlázalos desde aquí cuando estén listos.
         </p>
       </div>
     </section>
 
     <div class="footer">
-      © <span id="y"></span> Don Retos · Iván Barca.
-      <span style="opacity:.65">La noche no se explica, se juega.</span>
+      © <span id="y"></span> Don Retos · Iván Barca — El hermano que siempre necesitaste.
     </div>
   </main>
 
+  <div class="toast" id="toast"></div>
+
   <script>
-    // ====== little addictive counters (fake for vibe) ======
-    const playsEl = document.getElementById('plays');
-    const streakEl = document.getElementById('streak');
-    let plays = 124 + Math.floor(Math.random()*40);
-    let streak = 8 + Math.floor(Math.random()*9);
+    // Año
+    document.getElementById("y").textContent = new Date().getFullYear();
 
-    function tick(){
-      if(Math.random() < 0.55) plays += 1;
-      if(Math.random() < 0.30) streak += 1;
-      playsEl.textContent = plays.toLocaleString('es-EC');
-      streakEl.textContent = streak;
-    }
-    setInterval(tick, 1200); tick();
-
-    // ====== intensity system ======
-    const fill = document.getElementById('fill');
-    const pctEl = document.getElementById('pct');
-    const label = document.getElementById('label');
-    const packs = Array.from(document.querySelectorAll('.pack'));
-    const resetBtn = document.getElementById('reset');
-    const boostBtn = document.getElementById('boost');
-    const playBtn = document.getElementById('playBtn');
-
+    // ======== Intensidad (0..100) ========
     let intensity = 0;
+    let modo21 = false;
 
-    function labelFor(p){
-      if(p <= 25) return 'Suave';
-      if(p <= 55) return 'Picante';
-      if(p <= 85) return 'Peligroso';
-      return '💥 MODO HISTORIA';
-    }
+    const pctEl = document.getElementById("pct");
+    const fillEl = document.getElementById("barFill");
+    const hintEl = document.getElementById("hint");
 
-    function setIntensity(v, withFx=true){
-      intensity = Math.max(0, Math.min(100, Math.round(v)));
-      fill.style.width = intensity + '%';
+    function clamp(n, a, b){ return Math.max(a, Math.min(b, n)); }
+
+    function setIntensity(value){
+      intensity = clamp(Math.round(value), 0, 100);
       pctEl.textContent = intensity;
-      label.textContent = labelFor(intensity);
+      fillEl.style.width = intensity + "%";
 
-      if(withFx && intensity >= 100){
-        boom(220);
-      }
-    }
+      // Fondo reactivo: más intensidad = más noche + más glow
+      const t = intensity / 100;
+      document.body.style.setProperty("--night", (0.06 + t*0.25).toFixed(3));
+      document.body.style.setProperty("--night2", (0.18 + t*0.40).toFixed(3));
+      document.body.style.setProperty("--glow", (0.22 + t*0.40).toFixed(3));
+      document.body.style.setProperty("--glow2", (0.12 + t*0.30).toFixed(3));
+      document.body.style.setProperty("--glow3", (0.10 + t*0.28).toFixed(3));
 
-    function togglePack(el){
-      const add = Number(el.dataset.add || 0);
-      const selected = el.classList.toggle('selected');
-      if(selected){
-        setIntensity(intensity + add);
-        pop(18);
+      if(intensity >= 90){
+        hintEl.textContent = "🔥 Estás en modo peligro. Si desbloqueas +21… no hay vuelta atrás.";
+      }else if(intensity >= 70){
+        hintEl.textContent = "😈 Ya estás cerca. Desbloquea +21 cuando quieras.";
+      }else if(intensity >= 35){
+        hintEl.textContent = "👀 Está subiendo… ahora sí se siente.";
       }else{
-        setIntensity(intensity - add);
+        hintEl.textContent = "Tip: juega la demo y sube el % para desbloquear el modo +21.";
+      }
+
+      // Auto celebraciones
+      if(intensity === 100){
+        boom(140);
+        toast("100% — La noche está fuera de control 💣");
+        beep(980, 0.06);
       }
     }
 
-    packs.forEach(p => p.addEventListener('click', () => togglePack(p)));
-
-    resetBtn.addEventListener('click', () => {
-      packs.forEach(p => p.classList.remove('selected'));
-      setIntensity(0, false);
-      pop(10);
-    });
-
-    boostBtn.addEventListener('click', () => {
-      // “Modo Caos”: sube un poco y si ya vas alto te empuja al 100
-      const bump = intensity >= 70 ? 35 : 20;
-      setIntensity(intensity + bump);
-      boom(90);
-    });
-
-    playBtn.addEventListener('click', () => {
-      // mini demo: sube intensidad como si “probaste”
-      setIntensity(intensity + 12);
-      pop(14);
-    });
-
-    // ====== Confetti canvas ======
-    const c = document.getElementById('fx');
-    const ctx = c.getContext('2d');
-    let W, H;
-    function resize(){
-      W = c.width = window.innerWidth * devicePixelRatio;
-      H = c.height = window.innerHeight * devicePixelRatio;
-      c.style.width = window.innerWidth + 'px';
-      c.style.height = window.innerHeight + 'px';
-      ctx.setTransform(1,0,0,1,0,0);
+    function resetIntensity(){
+      setIntensity(0);
+      modo21 = false;
+      toast("Reset. Vuelve a empezar 😇");
     }
-    window.addEventListener('resize', resize);
+
+    // Inicial
+    setIntensity(0);
+
+    // ======== Retos / demo ========
+    const challenges = [
+      "Mira a alguien del grupo durante 5 segundos sin hablar.",
+      "Di algo que normalmente no dirías en voz alta.",
+      "Elige a alguien y dile un secreto falso (con cara seria).",
+      "Cambia de lugar con la persona que menos conoces.",
+      "Sonríe sin razón durante 10 segundos.",
+      "Haz un brindis por la persona más peligrosa aquí.",
+      "Elige a alguien: hoy te debe una confesión.",
+      "Mira a alguien y di: “tú y yo… luego hablamos”.",
+      "Pregunta: “¿quién aquí tiene el secreto más oscuro?”"
+    ];
+
+    function newChallenge(){
+      const c = challenges[Math.floor(Math.random()*challenges.length)];
+      document.getElementById("quickChallenge").textContent = c;
+      setIntensity(intensity + 8);
+      pop(12);
+      beep(880,0.05);
+    }
+
+    function passChallenge(){
+      document.getElementById("quickChallenge").textContent =
+        "👀 Pasar también cuenta… pero la noche lo recuerda.";
+      setIntensity(intensity + 4);
+      beep(520,0.05);
+    }
+
+    const cardTexts = [
+      "Elige a alguien que te intrigue.",
+      "Haz una pregunta incómoda (sin explicar por qué).",
+      "Decide quién manda la próxima ronda.",
+      "Di: “ok… ahora sí empieza lo bueno”.",
+      "Esto se está poniendo interesante…",
+      "Se acabó el modo tímidos.",
+      "Todos miran a alguien. Nadie dice por qué."
+    ];
+
+    function flipCard(){
+      const el = document.getElementById("card");
+      el.textContent = cardTexts[Math.floor(Math.random()*cardTexts.length)];
+      el.style.transform = "scale(1.05)";
+      setTimeout(()=>el.style.transform="scale(1)",150);
+      setIntensity(intensity + 10);
+      pop(18);
+      beep(920,0.05);
+    }
+
+    function superFlip(){
+      const el = document.getElementById("card");
+      el.classList.remove("shake");
+      void el.offsetWidth;
+      el.classList.add("shake");
+      flipCard();
+      setIntensity(intensity + 12);
+      boom(90);
+      toast("Modo Caos ⚡ (solo por hoy)");
+      beep(1040,0.06);
+    }
+
+    // ======== +21 ========
+    function toggle21(showToast){
+      if(intensity < 70){
+        toast("Aún no. Sube la intensidad a 70%+ 😈");
+        beep(420,0.06);
+        return;
+      }
+      modo21 = true;
+      if(showToast) toast("Modo +21 ACTIVADO 🔥");
+      beep(980,0.06);
+      pop(20);
+      updateLockedText();
+    }
+
+    function updateLockedText(){
+      const el = document.getElementById("lockedText");
+      if(!modo21){
+        el.textContent = "██████████████████████████";
+      }else{
+        el.textContent = "✅ +21 activado — En la app real esto muestra packs extra.";
+      }
+    }
+
+    function unlock(){
+      if(intensity < 70){
+        const el = document.getElementById("lockedText");
+        el.textContent = "Aún no… sube la intensidad 😈";
+        pop(12);
+        beep(420,0.06);
+        return;
+      }
+      modo21 = true;
+      updateLockedText();
+      boom(120);
+      toast("Desbloqueado. Ahora sí… 🔥");
+      beep(980,0.06);
+    }
+
+    // Tap secreto en la marca: 5 taps para activar +21 si intensidad >=70
+    let tapCount = 0;
+    const brandTap = document.getElementById("brandTap");
+    brandTap.addEventListener("click", () => {
+      tapCount++;
+      if(tapCount >= 5){
+        tapCount = 0;
+        if(modo21){
+          modo21 = false;
+          updateLockedText();
+          toast("Modo +21 desactivado");
+          beep(520,0.05);
+        }else{
+          toggle21(true);
+        }
+      }else{
+        beep(700, 0.03);
+      }
+    });
+
+    // ======== Micro feedback: confetti + pop ========
+    const canvas = document.getElementById("confetti");
+    const ctx = canvas.getContext("2d");
+    let W = 0, H = 0;
+    function resize(){
+      W = canvas.width = window.innerWidth * devicePixelRatio;
+      H = canvas.height = window.innerHeight * devicePixelRatio;
+    }
+    window.addEventListener("resize", resize);
     resize();
 
-    const colors = ['#7C3AED','#9333EA','#E100FF','#EC4899','#ffffff'];
-    const parts = [];
-    function addParticles(n, power=10){
-      for(let i=0;i<n;i++){
-        const size = (2 + Math.random()*6) * devicePixelRatio;
-        parts.push({
-          x: (Math.random()*W),
-          y: (-20*devicePixelRatio),
-          vx: (Math.random()*2-1) * power * devicePixelRatio * .15,
-          vy: (Math.random()*2+2) * power * devicePixelRatio * .20,
-          r: size,
-          rot: Math.random()*Math.PI,
-          vr: (Math.random()*2-1) * 0.18,
-          col: colors[(Math.random()*colors.length)|0],
-          life: 120 + (Math.random()*60)|0
+    let particles = [];
+    function boom(count=100){
+      for(let i=0;i<count;i++){
+        particles.push({
+          x: (window.innerWidth/2 + (Math.random()*260-130)) * devicePixelRatio,
+          y: (window.innerHeight*0.18 + (Math.random()*90)) * devicePixelRatio,
+          vx: (Math.random()*8-4) * devicePixelRatio,
+          vy: (Math.random()*-10-6) * devicePixelRatio,
+          g: (0.35 + Math.random()*0.25) * devicePixelRatio,
+          r: (3 + Math.random()*4) * devicePixelRatio,
+          a: 1,
+          rot: Math.random()*6.28,
+          vr: (Math.random()*0.25-0.125)
         });
       }
     }
 
-    function pop(n){ addParticles(n, 8); }
-    function boom(n){ addParticles(n, 14); }
-
-    function draw(){
+    function loop(){
       ctx.clearRect(0,0,W,H);
-      for(let i=parts.length-1;i>=0;i--){
-        const p = parts[i];
-        p.life -= 1;
-        p.vy += 0.08 * devicePixelRatio; // gravity
+      for(let i=particles.length-1;i>=0;i--){
+        const p = particles[i];
+        p.vy += p.g;
         p.x += p.vx;
         p.y += p.vy;
+        p.a -= 0.010;
         p.rot += p.vr;
 
+        // colores random entre violeta/pink/blanco
+        const pick = i % 3;
         ctx.save();
+        ctx.globalAlpha = Math.max(p.a,0);
         ctx.translate(p.x, p.y);
         ctx.rotate(p.rot);
-        ctx.fillStyle = p.col;
-        ctx.globalAlpha = Math.max(0, Math.min(1, p.life/120));
-        ctx.fillRect(-p.r/2, -p.r/2, p.r, p.r*0.65);
+        ctx.fillStyle = pick===0 ? "#7C3AED" : pick===1 ? "#EC4899" : "#FFFFFF";
+        ctx.fillRect(-p.r, -p.r, p.r*2, p.r*2);
         ctx.restore();
 
-        if(p.y > H + 60*devicePixelRatio || p.life <= 0){
-          parts.splice(i,1);
-        }
+        if(p.a <= 0 || p.y > H + 40*devicePixelRatio) particles.splice(i,1);
       }
-      requestAnimationFrame(draw);
+      requestAnimationFrame(loop);
     }
-    draw();
+    loop();
 
-    // Year
-    document.getElementById("y").textContent = new Date().getFullYear();
+    // Pop: mini “golpe” visual (animación rápida)
+    function pop(amount=12){
+      // pequeño pulso en el fill de la barra
+      fillEl.style.filter = "brightness(1.35)";
+      setTimeout(()=>fillEl.style.filter="brightness(1.0)",120);
+      // un poco de confetti si sube fuerte
+      if(amount >= 15) boom(60);
+    }
 
-    // start with subtle confetti “hello”
-    setTimeout(() => pop(18), 700);
+    // ======== Toast ========
+    const toastEl = document.getElementById("toast");
+    let toastTimer = null;
+    function toast(msg){
+      toastEl.textContent = msg;
+      toastEl.classList.add("show");
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(()=>toastEl.classList.remove("show"), 1700);
+    }
+
+    // ======== Sonidito (sin archivos) ========
+    let audioCtx = null;
+    function beep(freq=880, dur=0.045){
+      try{
+        audioCtx = audioCtx || new (window.AudioContext || window.webkitAudioContext)();
+        const o = audioCtx.createOscillator();
+        const g = audioCtx.createGain();
+        o.type = "triangle";
+        o.frequency.value = freq;
+        g.gain.value = 0.06;
+        o.connect(g); g.connect(audioCtx.destination);
+        o.start();
+        o.stop(audioCtx.currentTime + dur);
+      }catch(e){}
+    }
   </script>
 </body>
 </html>
