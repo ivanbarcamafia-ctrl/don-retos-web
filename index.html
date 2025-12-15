@@ -10,56 +10,78 @@
     :root{
       --bg0:#050516;
       --bg1:#020617;
-      --card:rgba(255,255,255,.06);
-      --card2:rgba(255,255,255,.08);
-      --txt:#ffffff;
-      --muted:rgba(255,255,255,.72);
-      --muted2:rgba(255,255,255,.56);
-      --stroke:rgba(255,255,255,.14);
+      --txt:#fff;
+      --muted:rgba(255,255,255,.75);
+      --muted2:rgba(255,255,255,.55);
+      --stroke:rgba(255,255,255,.12);
+
       --violet:#7C3AED;
       --purple:#9333EA;
       --magenta:#E100FF;
       --pink:#EC4899;
+
       --green:#22C55E;
       --yellow:#FACC15;
-      --shadow: 0 18px 46px rgba(0,0,0,.55);
-      --radius: 22px;
+
+      --radius:24px;
+      --shadow: 0 18px 60px rgba(0,0,0,.55);
       --max: 1120px;
+
+      --ease: cubic-bezier(.2,.9,.2,1);
     }
 
     *{box-sizing:border-box}
+    html,body{height:100%}
     body{
       margin:0;
       font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Noto Sans", "Helvetica Neue";
       color:var(--txt);
       background:
-        radial-gradient(1200px 600px at 20% 0%, rgba(124,58,237,.35), transparent 55%),
-        radial-gradient(900px 500px at 90% 10%, rgba(225,0,255,.22), transparent 55%),
-        radial-gradient(800px 500px at 50% 100%, rgba(236,72,153,.18), transparent 55%),
+        radial-gradient(1200px 600px at 15% 0%, rgba(124,58,237,.38), transparent 58%),
+        radial-gradient(900px 520px at 95% 10%, rgba(225,0,255,.22), transparent 55%),
+        radial-gradient(900px 520px at 60% 105%, rgba(236,72,153,.16), transparent 55%),
         linear-gradient(180deg, var(--bg0), var(--bg1));
       overflow-x:hidden;
     }
 
     a{color:inherit; text-decoration:none}
     .wrap{max-width:var(--max); margin:0 auto; padding:0 18px}
+
+    /* NAV */
     .nav{
-      position:sticky; top:0; z-index:20;
+      position:sticky; top:0; z-index:30;
       backdrop-filter: blur(14px);
       background: rgba(5,5,22,.55);
       border-bottom: 1px solid rgba(255,255,255,.08);
     }
     .nav-inner{
       display:flex; align-items:center; justify-content:space-between;
-      height:64px;
+      height:66px;
+      gap:12px;
     }
-    .brand{display:flex; align-items:center; gap:10px; font-weight:900; letter-spacing:.2px}
+    .brand{
+      display:flex; align-items:center; gap:10px; font-weight:950; letter-spacing:.2px
+    }
     .logo{
-      width:36px; height:36px; border-radius:12px;
+      width:38px; height:38px; border-radius:14px;
       background: linear-gradient(135deg, var(--violet), var(--pink));
-      box-shadow: 0 10px 24px rgba(124,58,237,.35);
+      box-shadow: 0 14px 34px rgba(124,58,237,.42);
+      position:relative;
+      overflow:hidden;
     }
-    .nav-links{display:flex; gap:14px; color:var(--muted2); font-weight:700; font-size:14px}
-    .nav-links a:hover{color:var(--txt)}
+    .logo::after{
+      content:"";
+      position:absolute; inset:-30px;
+      background: conic-gradient(from 210deg, rgba(255,255,255,0), rgba(255,255,255,.22), rgba(255,255,255,0));
+      animation: spin 6.5s linear infinite;
+      filter: blur(8px);
+      opacity:.55;
+    }
+    .nav-links{display:flex; gap:14px; color:var(--muted2); font-weight:800; font-size:14px}
+    .nav-links a{padding:8px 10px; border-radius:999px}
+    .nav-links a:hover{color:var(--txt); background: rgba(255,255,255,.06)}
+
+    /* BUTTONS */
     .btn{
       display:inline-flex; align-items:center; justify-content:center;
       gap:10px;
@@ -68,30 +90,41 @@
       border: 1px solid rgba(255,255,255,.14);
       background: rgba(255,255,255,.06);
       color:var(--txt);
-      font-weight:900;
+      font-weight:950;
       box-shadow: 0 10px 28px rgba(0,0,0,.35);
-      transition: transform .12s ease, background .12s ease;
+      transition: transform .14s var(--ease), background .14s var(--ease), box-shadow .14s var(--ease);
       cursor:pointer;
       user-select:none;
+      position:relative;
+      overflow:hidden;
     }
     .btn:hover{transform: translateY(-1px); background: rgba(255,255,255,.09)}
+    .btn:active{transform: translateY(1px) scale(.99)}
     .btn.primary{
       border:none;
       background: linear-gradient(135deg, var(--violet), var(--purple), var(--magenta));
-      box-shadow: 0 14px 36px rgba(124,58,237,.40);
+      box-shadow: 0 16px 46px rgba(124,58,237,.48);
     }
-    .btn.primary:hover{transform: translateY(-1px) scale(1.01)}
-    .hero{
-      padding:54px 0 18px;
+    .btn.primary::after{
+      content:"";
+      position:absolute; inset:-40px;
+      background: radial-gradient(circle at 30% 30%, rgba(255,255,255,.35), transparent 55%);
+      transform: translateX(-30%) translateY(-30%);
+      opacity:.25;
+      transition: opacity .2s var(--ease);
     }
+    .btn.primary:hover::after{opacity:.38}
+
+    /* HERO */
+    .hero{padding:54px 0 18px; position:relative}
     .grid{
       display:grid;
-      grid-template-columns: 1.2fr .8fr;
-      gap:18px;
+      grid-template-columns: 1.12fr .88fr;
+      gap:16px;
       align-items:stretch;
     }
-    @media (max-width: 900px){
-      .grid{grid-template-columns: 1fr}
+    @media (max-width: 920px){
+      .grid{grid-template-columns:1fr}
       .nav-links{display:none}
     }
 
@@ -101,17 +134,19 @@
       border-radius: var(--radius);
       box-shadow: var(--shadow);
       overflow:hidden;
+      position:relative;
     }
+
     .hero-card{padding:22px}
     .kicker{
       display:inline-flex; align-items:center; gap:8px;
-      padding:6px 10px;
+      padding:7px 11px;
       border-radius:999px;
       background: rgba(255,255,255,.08);
       border: 1px solid rgba(255,255,255,.12);
       color: var(--muted);
       font-size:12px;
-      font-weight:800;
+      font-weight:900;
     }
     .kicker b{
       background: linear-gradient(90deg, var(--green), var(--yellow));
@@ -119,11 +154,12 @@
       background-clip:text;
       color:transparent;
     }
+
     h1{
       margin:12px 0 10px;
-      font-size:44px;
-      line-height:1.05;
-      letter-spacing:-.7px;
+      font-size:46px;
+      line-height:1.02;
+      letter-spacing:-.9px;
     }
     .grad{
       background: linear-gradient(90deg, #fff, rgba(255,255,255,.9), rgba(177,151,255,.95), rgba(225,0,255,.85));
@@ -134,31 +170,38 @@
     .sub{
       color: var(--muted);
       font-size:15px;
-      line-height:1.5;
+      line-height:1.55;
       margin:0 0 16px;
-      max-width: 56ch;
+      max-width: 58ch;
     }
-    .cta{display:flex; gap:12px; flex-wrap:wrap; margin-top:10px}
-    .mini{
-      margin-top:14px;
+
+    /* “viral meter” */
+    .live{
+      margin-top:10px;
       display:flex; gap:10px; flex-wrap:wrap;
       color: var(--muted2);
-      font-weight:700;
+      font-weight:900;
       font-size:13px;
     }
-    .mini span{
-      padding:8px 10px;
+    .pill{
+      padding:9px 10px;
       border-radius:999px;
       background: rgba(255,255,255,.06);
       border:1px solid rgba(255,255,255,.10);
+      display:inline-flex; align-items:center; gap:8px;
+    }
+    .dot{
+      width:8px; height:8px; border-radius:99px;
+      background: linear-gradient(135deg, var(--green), var(--yellow));
+      box-shadow: 0 0 16px rgba(250,204,21,.35);
     }
 
-    .preview{
-      padding:18px;
-      display:flex; flex-direction:column; gap:12px;
-    }
+    .cta{display:flex; gap:12px; flex-wrap:wrap; margin-top:12px}
+
+    /* RIGHT SIDE */
+    .preview{padding:18px; display:flex; flex-direction:column; gap:12px}
     .mock{
-      height: 260px;
+      height: 270px;
       border-radius: 18px;
       border: 1px solid rgba(255,255,255,.12);
       background:
@@ -170,12 +213,12 @@
     }
     .mock::after{
       content:"";
-      position:absolute; inset:-40px;
-      background: conic-gradient(from 220deg, rgba(124,58,237,.0), rgba(225,0,255,.18), rgba(124,58,237,.0));
+      position:absolute; inset:-50px;
+      background: conic-gradient(from 220deg, rgba(124,58,237,0), rgba(225,0,255,.22), rgba(124,58,237,0));
       filter: blur(10px);
       animation: spin 7s linear infinite;
+      opacity:.85;
     }
-    @keyframes spin{to{transform:rotate(360deg)}}
     .mock-inner{
       position:absolute; inset:14px;
       border-radius: 14px;
@@ -186,31 +229,24 @@
       padding:14px;
       z-index:1;
     }
-    .mock-inner .big{
-      font-weight:950;
-      font-size:20px;
-    }
+    .mock-inner .big{font-weight:950; font-size:20px}
     .mock-inner .small{
       margin-top:6px;
       color: var(--muted);
-      font-weight:700;
+      font-weight:800;
       font-size:13px;
       line-height:1.35;
-      max-width: 32ch;
+      max-width: 36ch;
     }
 
+    /* Section */
     section{padding:18px 0}
-    .section-title{
-      font-size:20px; font-weight:950;
-      margin:0 0 10px;
-      letter-spacing:.2px;
-    }
+    .hr{height:1px; background: rgba(255,255,255,.10); margin:18px 0}
+
+    .section-title{font-size:20px; font-weight:950; margin:0 0 10px; letter-spacing:.2px}
     .section-sub{color:var(--muted); margin:0 0 14px; line-height:1.55}
-    .cols{
-      display:grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap:12px;
-    }
+
+    .cols{display:grid; grid-template-columns: repeat(3, 1fr); gap:12px}
     @media (max-width: 900px){ .cols{grid-template-columns:1fr} }
 
     .tile{
@@ -218,23 +254,126 @@
       border-radius: 18px;
       background: rgba(255,255,255,.06);
       border: 1px solid rgba(255,255,255,.10);
+      transition: transform .16s var(--ease), background .16s var(--ease), border-color .16s var(--ease);
+      position:relative;
+      overflow:hidden;
+    }
+    .tile:hover{
+      transform: translateY(-2px);
+      background: rgba(255,255,255,.08);
+      border-color: rgba(177,151,255,.32);
     }
     .tile h3{margin:8px 0 6px; font-size:15px; font-weight:950}
     .tile p{margin:0; color:var(--muted); font-size:13px; line-height:1.45}
     .emoji{font-size:20px}
 
-    .hr{height:1px; background: rgba(255,255,255,.10); margin:18px 0}
+    /* clickable packs */
+    .pack{
+      cursor:pointer;
+      user-select:none;
+    }
+    .pack::after{
+      content:"";
+      position:absolute; inset:-60px;
+      background: radial-gradient(circle at 30% 30%, rgba(255,255,255,.22), transparent 55%);
+      opacity:0;
+      transition: opacity .2s var(--ease);
+    }
+    .pack:hover::after{opacity:.25}
+    .pack.selected{
+      border-color: rgba(225,0,255,.55);
+      box-shadow: 0 18px 60px rgba(225,0,255,.18);
+    }
+    .pack.selected .tag{
+      opacity:1;
+      transform: translateY(0);
+    }
+    .tag{
+      position:absolute; top:12px; right:12px;
+      padding:6px 10px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.16);
+      background: rgba(0,0,0,.35);
+      font-size:12px;
+      font-weight:950;
+      color: rgba(255,255,255,.92);
+      opacity:0;
+      transform: translateY(-6px);
+      transition: .18s var(--ease);
+    }
+
+    /* intensity bar */
+    .bar-wrap{
+      margin-top:12px;
+      padding:12px;
+      border-radius: 18px;
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.10);
+    }
+    .bar-top{
+      display:flex; align-items:center; justify-content:space-between;
+      gap:10px; margin-bottom:8px;
+      font-weight:950;
+      color: rgba(255,255,255,.86);
+    }
+    .bar-top small{color: var(--muted2); font-weight:900}
+    .bar{
+      height: 12px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.10);
+      overflow:hidden;
+      position:relative;
+    }
+    .bar > i{
+      display:block;
+      height:100%;
+      width:0%;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--violet), var(--purple), var(--magenta), var(--pink));
+      transition: width .28s var(--ease);
+      position:relative;
+    }
+    .bar > i::after{
+      content:"";
+      position:absolute; inset:-20px;
+      background: radial-gradient(circle at 20% 50%, rgba(255,255,255,.35), transparent 55%);
+      opacity:.35;
+      transform: translateX(-20%);
+      animation: sheen 1.8s linear infinite;
+    }
+    @keyframes sheen{
+      to{transform: translateX(120%)}
+    }
+
+    /* confetti canvas overlay */
+    #fx{
+      pointer-events:none;
+      position:fixed; inset:0;
+      z-index:100;
+    }
+
     .footer{
       padding:22px 0 34px;
       color: var(--muted2);
       font-size:13px;
     }
-    .footer a{color: rgba(177,151,255,.95); font-weight:800}
-    .legal-links{display:flex; gap:12px; flex-wrap:wrap; margin-top:8px}
+    .footer a{color: rgba(177,151,255,.95); font-weight:900}
+    .legal-links{display:flex; gap:12px; flex-wrap:wrap; margin-top:10px}
+
+    /* background particles */
+    .bgfx{
+      position:absolute; inset:0;
+      pointer-events:none;
+      opacity:.65;
+      mask-image: radial-gradient(circle at 50% 10%, black 40%, transparent 72%);
+    }
+    @keyframes spin{to{transform:rotate(360deg)}}
   </style>
 </head>
 
 <body>
+  <canvas id="fx"></canvas>
+
   <div class="nav">
     <div class="wrap nav-inner">
       <div class="brand">
@@ -253,45 +392,80 @@
 
   <main class="wrap">
     <div class="hero">
+      <!-- subtle moving bg particles -->
+      <svg class="bgfx" viewBox="0 0 100 40" preserveAspectRatio="none" aria-hidden="true">
+        <defs>
+          <linearGradient id="g" x1="0" x2="1">
+            <stop offset="0" stop-color="#7C3AED" stop-opacity=".35"/>
+            <stop offset=".6" stop-color="#E100FF" stop-opacity=".22"/>
+            <stop offset="1" stop-color="#EC4899" stop-opacity=".18"/>
+          </linearGradient>
+        </defs>
+        <circle cx="18" cy="10" r="5" fill="url(#g)"/>
+        <circle cx="36" cy="18" r="7" fill="url(#g)"/>
+        <circle cx="62" cy="12" r="6" fill="url(#g)"/>
+        <circle cx="84" cy="22" r="8" fill="url(#g)"/>
+      </svg>
+
       <div class="grid">
         <div class="card hero-card">
           <div class="kicker">🍾 <b>Fiesta responsable</b> · Juego para adultos</div>
+
           <h1><span class="grad">Don Retos</span><br/>la noche sube de nivel.</h1>
+
           <p class="sub">
             Elige packs, añade jugadores y deja que la app maneje la tensión:
-            de “rompehielos” a “todo o nada”. Diseñada con estética moderna,
-            haptics y ritmo de fiesta.
+            de “rompehielos” a “todo o nada”.
+            <b style="color:rgba(255,255,255,.9)">Cada click sube la intensidad.</b>
           </p>
 
-          <div class="cta" id="descargar">
-            <!-- Cambia estos links cuando tengas Play/App Store -->
-            <a class="btn primary" href="#" onclick="alert('Aquí irá tu link de Google Play cuando te aprueben la cuenta ✅')">Google Play</a>
-            <a class="btn" href="#" onclick="alert('Aquí irá tu link de App Store (requiere Mac/Xcode y cuenta Apple) ✅')">App Store</a>
-            <a class="btn" href="#funciona">Ver cómo funciona</a>
+          <!-- live addictive little meter -->
+          <div class="live">
+            <span class="pill"><span class="dot"></span> Partidas hoy: <span id="plays">0</span></span>
+            <span class="pill">🔥 Racha: <span id="streak">0</span> min</span>
+            <span class="pill">⚡ Intensidad: <span id="pct">0</span>%</span>
           </div>
 
-          <div class="mini">
-            <span>⚡ Intensidad en %</span>
-            <span>🎉 Confetti al empezar</span>
-            <span>🔐 Packs +18 / +21</span>
+          <div class="bar-wrap" aria-label="Intensidad de la noche">
+            <div class="bar-top">
+              <div>Intensidad de la noche</div>
+              <small id="label">Suave</small>
+            </div>
+            <div class="bar"><i id="fill"></i></div>
+            <div style="margin-top:10px; display:flex; gap:10px; flex-wrap:wrap">
+              <button class="btn" type="button" id="reset">Reset</button>
+              <button class="btn primary" type="button" id="boost">🔥 Modo Caos</button>
+            </div>
+          </div>
+
+          <div class="cta" id="descargar" style="margin-top:14px">
+            <a class="btn primary" href="#" id="playBtn">Probar demo (click)</a>
+            <a class="btn" href="#" onclick="alert('Aquí irá tu link de Google Play cuando te aprueben la cuenta ✅')">Google Play</a>
+            <a class="btn" href="#" onclick="alert('Aquí irá tu link de App Store (requiere Mac/Xcode y cuenta Apple) ✅')">App Store</a>
+          </div>
+
+          <div class="live" style="margin-top:12px">
+            <span class="pill">🎉 Confetti al 100%</span>
+            <span class="pill">🔐 Packs +18 / +21 bloqueables</span>
+            <span class="pill">📩 Soporte: ivanbarcamafia@gmail.com</span>
           </div>
         </div>
 
         <div class="card preview">
           <div class="mock" aria-hidden="true">
             <div class="mock-inner">
-              <div class="big">Tu screenshot aquí</div>
+              <div class="big">Pon screenshots reales</div>
               <div class="small">
-                Recomendación: sube 3–5 capturas y cambia este bloque por imágenes.
+                Tip: usa 1080×1920 y 1242×2688. Cambiamos este bloque por imágenes cuando quieras.
               </div>
             </div>
           </div>
 
           <div class="tile">
-            <div class="emoji">🔥</div>
-            <h3>Intensidad de la noche</h3>
+            <div class="emoji">🕹️</div>
+            <h3>La app te “pica” a seguir</h3>
             <p>
-              La barra sube según los packs elegidos y te deja ver “qué tan caliente” va la partida.
+              Micro-feedback, ritmo y escalada. Sientes el progreso al instante.
             </p>
           </div>
         </div>
@@ -302,9 +476,7 @@
 
     <section id="funciona">
       <h2 class="section-title">Cómo funciona</h2>
-      <p class="section-sub">
-        En 20 segundos ya estás jugando. Sin complicarte, pero con control.
-      </p>
+      <p class="section-sub">En 20 segundos ya estás jugando. Sin complicarte, pero con control.</p>
 
       <div class="cols">
         <div class="tile">
@@ -314,35 +486,38 @@
         </div>
         <div class="tile">
           <div class="emoji">⏱️</div>
-          <h3>2) Define duración</h3>
-          <p>10–40 min. La app gestiona turnos y ritmo.</p>
+          <h3>2) Duración</h3>
+          <p>10–40 min. Ritmo rápido, como reels: directo al punto.</p>
         </div>
         <div class="tile">
           <div class="emoji">👥</div>
-          <h3>3) Agrega jugadores</h3>
-          <p>Con apodos. Se elige al azar quién recibe el reto.</p>
+          <h3>3) Jugadores</h3>
+          <p>Con apodos. La app elige al azar quién enfrenta el reto.</p>
         </div>
       </div>
     </section>
 
     <section id="packs">
-      <h2 class="section-title">Packs (niveles)</h2>
-      <p class="section-sub">
-        Diseñados para escalar la noche. (Puedes editar los textos cuando quieras.)
-      </p>
+      <h2 class="section-title">Packs (clic para subir intensidad)</h2>
+      <p class="section-sub">Tócalos: se “seleccionan” y sube la barra. Cuando llegas al 100%… boom.</p>
 
       <div class="cols">
-        <div class="tile">
+        <div class="tile pack" data-add="20" data-name="Nivel 1 — Calentamiento">
+          <div class="tag">+20%</div>
           <div class="emoji">❄️</div>
           <h3>Nivel 1 — Calentamiento</h3>
-          <p>Rompehielos, coqueteo suave, risas sin presión.</p>
+          <p>Rompehielos, risas, coqueteo suave.</p>
         </div>
-        <div class="tile">
+
+        <div class="tile pack" data-add="30" data-name="Nivel 2 — Química fuerte">
+          <div class="tag">+30%</div>
           <div class="emoji">😈</div>
           <h3>Nivel 2 — Química fuerte</h3>
           <p>Tensión, atrevimiento, “a ver quién se anima”.</p>
         </div>
-        <div class="tile">
+
+        <div class="tile pack" data-add="50" data-name="Nivel 3 — Extremo +18">
+          <div class="tag">+50%</div>
           <div class="emoji">💣</div>
           <h3>Nivel 3 — Extremo +18</h3>
           <p>Solo para valientes. Retos intensos, cero filtro.</p>
@@ -352,20 +527,18 @@
 
     <section id="seguridad">
       <h2 class="section-title">Modo responsable</h2>
-      <p class="section-sub">
-        La regla #1 es el consentimiento. Si alguien no quiere, se salta y punto.
-      </p>
+      <p class="section-sub">Regla #1: consentimiento. Si alguien no quiere, se salta y punto.</p>
 
       <div class="cols">
         <div class="tile">
           <div class="emoji">🧠</div>
           <h3>Consentimiento</h3>
-          <p>“No” es “no”. Sin presión social. Sin burlas.</p>
+          <p>“No” es “no”. Cero presión. Cero vergüenza.</p>
         </div>
         <div class="tile">
           <div class="emoji">🍻</div>
           <h3>Alcohol</h3>
-          <p>Si hay alcohol, cada uno se cuida y decide. No es obligación.</p>
+          <p>Si hay alcohol, cada uno decide. Don Retos no obliga.</p>
         </div>
         <div class="tile">
           <div class="emoji">🔞</div>
@@ -384,24 +557,164 @@
       <div class="tile">
         <div><b>Documentos</b></div>
         <div class="legal-links">
-          <!-- Cambia estas URLs a tus rutas reales del repo legal -->
           <a class="btn" href="https://ivanbarcamafia-ctrl.github.io/don-retos-legal/" target="_blank" rel="noreferrer">Centro legal</a>
           <a class="btn" href="mailto:ivanbarcamafia@gmail.com">Escribir email</a>
         </div>
         <p style="margin:12px 0 0; color:var(--muted); font-size:13px; line-height:1.5">
-         s <code>terms.html</code> y <code>privacy.html</code>, 
-         .
+          Sube <code>terms.html</code> y <code>privacy.html</code> en tu repo legal y los linkeamos aquí.
         </p>
       </div>
     </section>
 
     <div class="footer">
-      © <span id="y"></span> Don Retos · Iván Barca - El hermano que siempre nesecitaste .
+      © <span id="y"></span> Don Retos · Iván Barca.
+      <span style="opacity:.65">La noche no se explica, se juega.</span>
     </div>
   </main>
 
   <script>
+    // ====== little addictive counters (fake for vibe) ======
+    const playsEl = document.getElementById('plays');
+    const streakEl = document.getElementById('streak');
+    let plays = 124 + Math.floor(Math.random()*40);
+    let streak = 8 + Math.floor(Math.random()*9);
+
+    function tick(){
+      if(Math.random() < 0.55) plays += 1;
+      if(Math.random() < 0.30) streak += 1;
+      playsEl.textContent = plays.toLocaleString('es-EC');
+      streakEl.textContent = streak;
+    }
+    setInterval(tick, 1200); tick();
+
+    // ====== intensity system ======
+    const fill = document.getElementById('fill');
+    const pctEl = document.getElementById('pct');
+    const label = document.getElementById('label');
+    const packs = Array.from(document.querySelectorAll('.pack'));
+    const resetBtn = document.getElementById('reset');
+    const boostBtn = document.getElementById('boost');
+    const playBtn = document.getElementById('playBtn');
+
+    let intensity = 0;
+
+    function labelFor(p){
+      if(p <= 25) return 'Suave';
+      if(p <= 55) return 'Picante';
+      if(p <= 85) return 'Peligroso';
+      return '💥 MODO HISTORIA';
+    }
+
+    function setIntensity(v, withFx=true){
+      intensity = Math.max(0, Math.min(100, Math.round(v)));
+      fill.style.width = intensity + '%';
+      pctEl.textContent = intensity;
+      label.textContent = labelFor(intensity);
+
+      if(withFx && intensity >= 100){
+        boom(220);
+      }
+    }
+
+    function togglePack(el){
+      const add = Number(el.dataset.add || 0);
+      const selected = el.classList.toggle('selected');
+      if(selected){
+        setIntensity(intensity + add);
+        pop(18);
+      }else{
+        setIntensity(intensity - add);
+      }
+    }
+
+    packs.forEach(p => p.addEventListener('click', () => togglePack(p)));
+
+    resetBtn.addEventListener('click', () => {
+      packs.forEach(p => p.classList.remove('selected'));
+      setIntensity(0, false);
+      pop(10);
+    });
+
+    boostBtn.addEventListener('click', () => {
+      // “Modo Caos”: sube un poco y si ya vas alto te empuja al 100
+      const bump = intensity >= 70 ? 35 : 20;
+      setIntensity(intensity + bump);
+      boom(90);
+    });
+
+    playBtn.addEventListener('click', () => {
+      // mini demo: sube intensidad como si “probaste”
+      setIntensity(intensity + 12);
+      pop(14);
+    });
+
+    // ====== Confetti canvas ======
+    const c = document.getElementById('fx');
+    const ctx = c.getContext('2d');
+    let W, H;
+    function resize(){
+      W = c.width = window.innerWidth * devicePixelRatio;
+      H = c.height = window.innerHeight * devicePixelRatio;
+      c.style.width = window.innerWidth + 'px';
+      c.style.height = window.innerHeight + 'px';
+      ctx.setTransform(1,0,0,1,0,0);
+    }
+    window.addEventListener('resize', resize);
+    resize();
+
+    const colors = ['#7C3AED','#9333EA','#E100FF','#EC4899','#ffffff'];
+    const parts = [];
+    function addParticles(n, power=10){
+      for(let i=0;i<n;i++){
+        const size = (2 + Math.random()*6) * devicePixelRatio;
+        parts.push({
+          x: (Math.random()*W),
+          y: (-20*devicePixelRatio),
+          vx: (Math.random()*2-1) * power * devicePixelRatio * .15,
+          vy: (Math.random()*2+2) * power * devicePixelRatio * .20,
+          r: size,
+          rot: Math.random()*Math.PI,
+          vr: (Math.random()*2-1) * 0.18,
+          col: colors[(Math.random()*colors.length)|0],
+          life: 120 + (Math.random()*60)|0
+        });
+      }
+    }
+
+    function pop(n){ addParticles(n, 8); }
+    function boom(n){ addParticles(n, 14); }
+
+    function draw(){
+      ctx.clearRect(0,0,W,H);
+      for(let i=parts.length-1;i>=0;i--){
+        const p = parts[i];
+        p.life -= 1;
+        p.vy += 0.08 * devicePixelRatio; // gravity
+        p.x += p.vx;
+        p.y += p.vy;
+        p.rot += p.vr;
+
+        ctx.save();
+        ctx.translate(p.x, p.y);
+        ctx.rotate(p.rot);
+        ctx.fillStyle = p.col;
+        ctx.globalAlpha = Math.max(0, Math.min(1, p.life/120));
+        ctx.fillRect(-p.r/2, -p.r/2, p.r, p.r*0.65);
+        ctx.restore();
+
+        if(p.y > H + 60*devicePixelRatio || p.life <= 0){
+          parts.splice(i,1);
+        }
+      }
+      requestAnimationFrame(draw);
+    }
+    draw();
+
+    // Year
     document.getElementById("y").textContent = new Date().getFullYear();
+
+    // start with subtle confetti “hello”
+    setTimeout(() => pop(18), 700);
   </script>
 </body>
 </html>
